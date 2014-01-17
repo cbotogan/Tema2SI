@@ -2,6 +2,7 @@ package com.example.tema2si;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -30,9 +31,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener {
 
@@ -41,12 +44,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
      * current dropdown position.
      */
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+    public static PowerUsage powerUsageService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        
+        powerUsageService = null;
+        powerUsageService = new PowerUsage(this);
+        
         // Set up the action bar to show a dropdown list.
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
@@ -62,9 +69,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
                         new String[] {
                                 getString(R.string.title_section1),
                                 getString(R.string.title_section2),
-                                getString(R.string.title_section3),
                         }),
                 this);
+        
+        powerUsageService.start();
+        //pu.start();
     }
 
 
@@ -109,7 +118,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
      * A dummy fragment representing a section of the app, but that simply
      * displays dummy text.
      */
-    public static class DummySectionFragment extends Fragment {
+    public static class DummySectionFragment extends Fragment{
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -127,10 +136,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
             View rootView = inflater.inflate(R.layout.fragment_main_dummy, container, false);
             TextView DeviceInfoTextView;
             context = getActivity();
+            
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
             	
             	DeviceInfoTextView = (TextView) rootView.findViewById(R.id.section_label);
-            	//registerReceiver(batteryStatusReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
             	DeviceInfoTextView.setText(
             			"Model device: " + Build.MODEL + "\n" +
             			"Versiune Android: " + Build.VERSION.RELEASE + "\n" +
@@ -142,32 +151,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
             }
             
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-            	ArrayList<listRow> rows = new ArrayList<listRow>();
-            	List<PackageInfo> packs = context.getPackageManager().getInstalledPackages(0);
             	
-            	for(int i = 0; i < packs.size(); i++){
-            		PackageInfo p = packs.get(i);
-            		listRow lRow = new listRow();
-            		int uid;
-                    lRow.package_name = p.applicationInfo.packageName;
-                    lRow.app_uid = Integer.toString(p.applicationInfo.uid);
-                    lRow.app_name = (String) context.getPackageManager().getApplicationLabel(p.applicationInfo);
-                    try {
-						lRow.icon = context.getPackageManager().getApplicationIcon(lRow.package_name);
-					} catch (NameNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-                    rows.add(lRow);
-            	}
+            	Toast.makeText(context, "Refresh by entering this tab again", Toast.LENGTH_LONG).show();
+            	ArrayList<PowerEvent> rows = MainActivity.powerUsageService.getHighestDrainers();         	
+            	
+            	ArrayAdapterAppInfo ad = new ArrayAdapterAppInfo(context, rows);
+            	ListView lw = (ListView) rootView.findViewById(R.id.listview_apps);
+            	rootView.findViewById(R.id.section_label).setVisibility(View.GONE);
+            	lw.setAdapter(ad);      	            	
                 
-                MyArrayAdapter ad = new MyArrayAdapter(context, rows);
-                ListView lw = (ListView) rootView.findViewById(R.id.listview_apps);
-                rootView.findViewById(R.id.section_label).setVisibility(View.GONE);
-                lw.setAdapter(ad);
             }
-            
-            //dummyTextView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+
             return rootView;
         }
         
@@ -179,8 +173,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
         	long totalRAM = memInfo.totalMem / 1024;
         	long freeRAM = memInfo.availMem / 1024;
         	
-        	return "Total RAM: " + Long.toString(totalRAM) + "\n" 
-        		+ "Free RAM: " + Long.toString(freeRAM) + "\n";
+        	return "Total RAM: " + Long.toString(totalRAM) + " kB\n" 
+        		+ "Free RAM: " + Long.toString(freeRAM) + " kB\n";
         }
         
         public String getDiskSpace(){
@@ -188,8 +182,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
         	StatFs fs = new StatFs(Environment.getRootDirectory().getAbsolutePath());
         	long totalSpace = (long) (fs.getBlockCount() * fs.getBlockSize()) / 1048576;
         	long freeSpace = (long) (fs.getAvailableBlocks() * fs.getBlockSize()) / 1048576;
-        	return "Total Disk Space: " + Long.toString(totalSpace) + "\n" +
-				"Free Disk Space: " + Long.toString(freeSpace) + "\n";
+        	return "Total Disk Space: " + Long.toString(totalSpace) + " MB\n" +
+				"Free Disk Space: " + Long.toString(freeSpace) + " MB\n";
         }
         
         public String getBatteryLevel(){
@@ -197,7 +191,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
         	Intent batteryStatus = context.registerReceiver(null, ifilter);
         	
         	int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-        	//int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 
         	return Integer.toString(level) + "%";       	
         	

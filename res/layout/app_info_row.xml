@@ -1,0 +1,186 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".AppInfo" >
+
+    <TextView
+        android:id="@+id/text_appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="App :"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N/A"
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@id/text_appName"
+        android:textSize="16sp" />
+    
+    <TextView
+        android:id="@+id/text_packageName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Package :"
+        android:layout_below="@id/text_appName"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/packageName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N/A"
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@id/text_packageName"
+        android:layout_below="@id/text_appName"
+        android:textSize="16sp" />
+    
+    <TextView
+        android:id="@+id/text_uid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UID :"
+        android:layout_below="@id/text_packageName"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/uid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N/A"
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@id/text_uid"
+        android:layout_below="@id/text_packageName"
+        android:textSize="16sp" />
+    
+    <TextView
+        android:id="@+id/text_cputime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CPU Time:"
+        android:layout_below="@id/text_uid"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/cputime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:layout_below="@id/text_uid"
+        android:layout_toRightOf="@id/text_cputime"
+        android:text="N/A"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_energycpu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_cputime"
+        android:text="CPU Energy: "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/energycpu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_cputime"
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@id/text_energycpu"
+        android:text="N/A"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_gpstime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_energycpu"
+        android:text="GPS Time: "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/gpstime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_energycpu"
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@id/text_gpstime"
+        android:text="N/A"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_energygps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_gpstime"
+        android:text="GPS Energy: "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/energygps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_gpstime"
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@id/text_energygps"
+        android:text="N/A"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_bytessent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_energygps"
+        android:text="Bytes sent: "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/bytessent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_energygps"
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@id/text_bytessent"
+        android:text="N/A"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_bytesreceived"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_bytessent"
+        android:text="Bytes received: "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/bytesreceived"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_bytessent"
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@id/text_bytesreceived"
+        android:text="N/A"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_energywifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_bytesreceived"
+        android:text="Wifi Energy: "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/energywifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_bytesreceived"
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@id/text_energywifi"
+        android:text="N/A"
+        android:textSize="16sp" />
+
+</RelativeLayout>

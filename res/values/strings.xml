@@ -4,7 +4,9 @@
     <string name="app_name">ResourcesSI</string>
     <string name="action_settings">Settings</string>
     <string name="title_section1">Device Info</string>
-    <string name="title_section2">Apps</string>
+    <string name="title_section2">Usage</string>
     <string name="title_section3">App info</string>
+    <string name="title_activity_app_info">AppInfo</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
